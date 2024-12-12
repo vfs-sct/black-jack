@@ -10,7 +10,7 @@ class Dealer
 {
 private:
 	Dealer();
-	~Dealer() {};
+	~Dealer();
 	// This is going to be the pool of cards, as cards are given to the dealer and players the appropriate cards will be removed from this collection.
 	std::vector<Card*> mCards;
 	static Dealer* sInstance;

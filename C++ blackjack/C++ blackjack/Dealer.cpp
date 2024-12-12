@@ -1,11 +1,22 @@
 #include "Dealer.h"
 Dealer* Dealer::sInstance = nullptr;
 
+// initializes the mCards collection
 Dealer::Dealer()
 {
 	mCards = std::vector<Card*>();
 }
 
+// deletes every card from the mCards collection.
+Dealer::~Dealer()
+{
+	for (int i = 0; i < mCards.size(); i++)
+	{
+		delete mCards[i];
+	}
+}
+
+// generates decks of cards, for every one deck 52 cards is generated. 
 void Dealer::GenerateDeck(int AmountOfDecks)
 {
 	for (int i = 0; i < AmountOfDecks * 4; i++)
@@ -32,18 +43,19 @@ void Dealer::GenerateDeck(int AmountOfDecks)
 
 		for (int j = 0; j < 13; j++)
 		{
-			Card* card = new Card((j > 9 ? 9 : j) + 1, suit);					/// ensure this is deleted in the destructor.
+			Card* card = new Card((j > 9 ? 9 : j) + 1, suit);
 			mCards.push_back(card);
-			std::cout << card->GetValue() << " of " << card->GetSuit() << std::endl;
 		}
 	}
 }
 
+// does not delete the memory, only the card from the deck
 void Dealer::RemoveCardFromDeck(int index)
 {
-	delete mCards[index];
+	mCards.erase(mCards.begin() + index);
 }
 
+// retuns a refernce to a card
 Card& Dealer::PullCard()
 {
 	int deckLength = mCards.size() - 1;

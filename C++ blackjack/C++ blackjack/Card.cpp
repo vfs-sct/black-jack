@@ -18,6 +18,7 @@ Suit Card::GetSuit() const
 
 Card::~Card()
 {
+    std::cout << "Card Destroyed " << mValue << " of " << mSuit << std::endl;
     mValue = 0;
     mSuit = Suit::UNDEFINED;
 }

@@ -1,5 +1,9 @@
-﻿  Source.cpp
-D:\School Projects\VFS\C++\T2\black-jack\C++ blackjack\C++ blackjack\Source.cpp(23,3): warning C4002: too many arguments for function-like macro invocation 'LOG'
+﻿  Card.cpp
+  Dealer.cpp
+D:\School Projects\VFS\C++\T2\black-jack\C++ blackjack\C++ blackjack\Dealer.cpp(61,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Source.cpp
+D:\School Projects\VFS\C++\T2\black-jack\C++ blackjack\C++ blackjack\Source.cpp(29,4): warning C4002: too many arguments for function-like macro invocation 'LOG'
 D:\School Projects\VFS\C++\T2\black-jack\C++ blackjack\C++ blackjack\Source.cpp(11,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-D:\School Projects\VFS\C++\T2\black-jack\C++ blackjack\C++ blackjack\Source.cpp(82,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\School Projects\VFS\C++\T2\black-jack\C++ blackjack\C++ blackjack\Source.cpp(94,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
   C++ blackjack.vcxproj -> D:\School Projects\VFS\C++\T2\black-jack\C++ blackjack\x64\Debug\C++ blackjack.exe

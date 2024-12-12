@@ -1,5 +1,7 @@
 #include "Utils.h"
 #include "Dealer.h"
+#define DEALER Dealer::GetInstance()
+
 
 class Player
 {
@@ -9,105 +11,194 @@ public:
 		srand(time(NULL));
 	}
 
-	int GetCard()
+	// iterates through all the cards in the Player's hand and deletes them.
+	~Player()
 	{
-		return (rand() % 13) + 1; // return 1 - 13
+		for (int i = 0; i < mPlayerCards.size(); i++)
+		{
+			delete mPlayerCards[i];
+		}
 	}
 
 	void PlayerChoice()
 	{
-		EMPTY_LN;
-		LOG_LN("Are you going to get a new Card?");
-		INPUT("yes or no: ", mPlayerChoice);
-		if (mPlayerChoice == "yes")
+		while (GetPlayerCardValue() <= 21 && mPlayerChoice != "no")
 		{
-			int newCard = GetCard();
-			SetPlayerCards(newCard);
-			LOG_LN("Your new card is: " << newCard);
-			LOG_LN("Your new sum is: " << mPlayerCards);
-			PlayerChoice();
-		}
-		else if (mPlayerChoice == "no")
-		{
-			LOG_LN("no");
-		}
-		else
-		{
-			LOG_LN("retry");
-			PlayerChoice();
+			EMPTY_LN;
+			LOG_LN("Are you going to get a new Card?");
+			INPUT("yes or no: ", mPlayerChoice);
+			EMPTY_LN;
+			if (mPlayerChoice == "yes")
+			{
+				Card newCard = DEALER->PullCard();
+				AddCard(&newCard);
+				LOG_LN("Your new card is: " << newCard.GetValue() << " of " << newCard.GetSuit());
+				LOG_LN("Your new sum is: " << GetPlayerCardValue());
+				PlayerChoice();
+			}
+			else if (mPlayerChoice == "no")
+			{
+				LOG_LN("no");
+			}
+			else
+			{
+				LOG_LN("retry");
+				PlayerChoice();
+			}
 		}
 	}
 
 	void PrintPlayerCards()
 	{
-		LOG_LN("Player's card: " << mPlayerCards);
+		for (int i = 0; i < mPlayerCards.size(); i++)
+		{
+			LOG_LN("You Pulled: " << mPlayerCards[i]->GetValue() << " of " << mPlayerCards[i]->GetSuit());
+		}
+		LOG_LN("Player Total: " << GetPlayerCardValue());
+		EMPTY_LN;
 	}
 
-	int SetPlayerCards(int newCard)
+	// Creates a Card on the heap based on the values of the passed card.
+	void AddCard(Card* InCard)
 	{
-		mPlayerCards = mPlayerCards + newCard;
-		return mPlayerCards;
+		Card* card = new Card(InCard->GetValue(), InCard->GetSuit());
+		mPlayerCards.push_back(card);
+	}
+
+	int GetPlayerCardValue() const
+	{
+		int value = 0;
+		for (int i = 0; i < mPlayerCards.size(); i++)
+		{
+			int cardValue = mPlayerCards[i]->GetValue();
+			if (value < 10 && cardValue == 1)
+			{
+				value += 11;
+				continue;
+			}
+			value += mPlayerCards[i]->GetValue();
+		}
+		return value;
 	}
 
 private:
-	int mPlayerCards = 0;
+	std::vector<Card*> mPlayerCards;
 	String mPlayerChoice;
 };
 
 class AI
 {
 public:
-	void PrintAICards()
-	{
-		LOG_LN("AI's card: " << mAICards);
-	}
-
-	int SetAICards(int newCard)
-	{
-		mAICards = mAICards + newCard;
-		return mAICards;
-	}
-
-private:
-	int mAICards = 0;
-};
-
-class Cards
-{
-public:
-	Cards()
+	AI()
 	{
 		srand(time(NULL));
 	}
 
-	int GetCard()
+	// iterates through all the cards in the AI's hand and deletes them.
+	~AI()
 	{
-		return (rand() % 13) + 1; // return 1 - 13
+		for (int i = 0; i < mAICards.size(); i++)
+		{
+			delete mAICards[i];
+		}
+	}
+
+	void AIChoice()
+	{
+		if (GetAICardsValue() <= 15)
+		{
+			AddCard(&DEALER->PullCard());
+			AIChoice();
+		}
+	}
+
+	void PrintAICards()
+	{
+		for (int i = 0; i < mAICards.size(); i++)
+		{
+			LOG_LN("AI Pulled: " << mAICards[i]->GetValue() << " of " << mAICards[i]->GetSuit());
+		}
+		LOG_LN("AI Total: " << GetAICardsValue());
+		EMPTY_LN;
+	}
+
+	// Creates a Card on the heap based on the values of the passed card.
+	void AddCard(Card* InCard)
+	{
+		Card* card = new Card(InCard->GetValue(), InCard->GetSuit());
+		mAICards.push_back(card);
+	}
+
+	int GetAICardsValue() const
+	{
+		int value = 0;
+		for (int i = 0; i < mAICards.size(); i++)
+		{
+			int cardValue = mAICards[i]->GetValue();
+			if (value < 10 && cardValue == 1)
+			{
+				value += 11;
+				continue;
+			}
+			value += mAICards[i]->GetValue();
+		}
+		return value;
 	}
 
 private:
-	int mCards;
+	std::vector<Card*> mAICards;
 };
+
+void result(int player, int ai)
+{
+	if (player > 21 && ai > 21)
+	{
+		LOG_LN("both lose no winner");
+	}
+	else if (player > 21)
+	{
+		LOG_LN("AI won player's card is over 21");
+	}
+	else if (ai > 21)
+	{
+		LOG_LN("Player won ai's card is over 21");
+	}
+	else if (player > ai)
+	{
+		LOG_LN("Player won");
+	}
+	else if (ai > player)
+	{
+		LOG_LN("AI won");
+	}
+	else
+	{
+		LOG_LN("draw");
+	}
+}
 
 int main()
 {
+	Player player;
+	AI ai;
+	DEALER->GenerateDeck(1);
 
-	// hanuel did this 
- 
+	player.AddCard(&DEALER->PullCard());
+	player.AddCard(&DEALER->PullCard());
+	ai.AddCard(&DEALER->PullCard());
 
-	//Player player;
-	//AI ai;
-	//Cards decks;
+	// print cards
+	player.PrintPlayerCards();
+	ai.PrintAICards();
 
-	//player.SetPlayerCards(decks.GetCard());
-	//ai.SetAICards(decks.GetCard());
+	player.PlayerChoice();
+	ai.AIChoice();
 
-	//// print cards
-	//player.PrintPlayerCards();
-	//ai.PrintAICards();
+	EMPTY_LN;
+	player.PrintPlayerCards();
+	ai.PrintAICards();
 
-	//player.PlayerChoice();
-	//return 0;
-
-	// Cole did this 
+	result(player.GetPlayerCardValue(), ai.GetAICardsValue());
+	DEALER->DeleteInstance();
+	return 0;
 }
