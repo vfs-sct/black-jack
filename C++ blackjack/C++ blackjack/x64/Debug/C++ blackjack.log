@@ -1,0 +1,5 @@
+﻿  Source.cpp
+C:\Users\cblue\source\repos\C++ blackjack\C++ blackjack\Source.cpp(20,3): warning C4002: too many arguments for function-like macro invocation 'LOG'
+C:\Users\cblue\source\repos\C++ blackjack\C++ blackjack\Source.cpp(8,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\cblue\source\repos\C++ blackjack\C++ blackjack\Source.cpp(79,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  C++ blackjack.vcxproj -> C:\Users\cblue\source\repos\C++ blackjack\x64\Debug\C++ blackjack.exe
