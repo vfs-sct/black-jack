@@ -1,4 +1,5 @@
 #include "Utils.h"
+#include "Dealer.h"
 
 class Player
 {
@@ -90,17 +91,23 @@ private:
 
 int main()
 {
-	Player player;
-	AI ai;
-	Cards decks;
 
-	player.SetPlayerCards(decks.GetCard());
-	ai.SetAICards(decks.GetCard());
+	// hanuel did this 
+ 
 
-	// print cards
-	player.PrintPlayerCards();
-	ai.PrintAICards();
+	//Player player;
+	//AI ai;
+	//Cards decks;
 
-	player.PlayerChoice();
-	return 0;
+	//player.SetPlayerCards(decks.GetCard());
+	//ai.SetAICards(decks.GetCard());
+
+	//// print cards
+	//player.PrintPlayerCards();
+	//ai.PrintAICards();
+
+	//player.PlayerChoice();
+	//return 0;
+
+	// Cole did this 
 }
